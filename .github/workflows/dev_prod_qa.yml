@@ -1,0 +1,52 @@
+#This is a basic workflow to help you get started with Actions
+name: Simple Manual Workflow - Three Env
+
+
+on:
+
+# This allow the to run workflow manually from the Action tab
+    workflow_dispatch:
+
+jobs:
+
+    DEV:
+
+        runs-on: ubuntu-latest
+        environment: DEV
+
+        steps:
+
+            - uses: actions/checkout@v2
+
+            - name: Run a script
+              run: |
+                echo "I am running a job in the DEV"
+
+
+    QA:
+        runs-on: ubuntu-latest
+        environment: QA
+        needs: DEV
+
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Run a script
+              run: |
+                echo "I am running a job in the QA"
+
+
+
+    PROD:
+          
+        runs-on: ubuntu-latest
+        environment: PROD
+        needs: QA
+
+        steps:
+            - uses: actions/checkout@v2
+            - name: Run a script
+              run: |
+                echo "I am running a job in the PROD"
+
+
